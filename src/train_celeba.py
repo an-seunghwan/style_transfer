@@ -15,34 +15,30 @@ from IPython.display import Image, display
 from tqdm import tqdm
 import os
 
-os.chdir('D:\style_transfer')
+os.chdir(r'D:\style_transfer')
 #%%
 PARAMS = {
     # Weights of the different loss components
     'total_variation_weight': 1e-6,
     'style_weight': 1e-6,
-    'content_weight': 2.5e-8,
-    'img_nrows': 400,
+    'content_weight': 1e-8,
     'channels': 3,
-    'iterations': 4000,
+    'iterations': 10000,
     'initial_learning_rate': 100.0, 
     'decay_steps': 100, 
     'decay_rate': 0.96
 }
 #%%
-base_image_path = K.utils.get_file(
-    "paris.jpg", "https://i.imgur.com/F28w3Ac.jpg"
-)
-style_reference_image_path = K.utils.get_file(
-    "starry_night.jpg", "https://i.imgur.com/9ooB60I.jpg"
-)
-result_prefix = "paris_generated"
+base_image_path = r'D:\celeba\img_align_celeba\img_align_celeba\001477.jpg'
+style_reference_image_path = r'D:\celeba\img_align_celeba\img_align_celeba\002210.jpg'
+result_prefix = "celeba_generated"
 
 # Dimensions of the generated picture.
 width, height = K.preprocessing.image.load_img(base_image_path).size
 print(width)
 print(height)
-PARAMS['img_ncols'] = int(width * PARAMS['img_nrows'] / height)
+PARAMS['img_nrows'] = width
+PARAMS['img_ncols'] = height
 #%%
 display(Image(base_image_path))
 display(Image(style_reference_image_path))
@@ -188,5 +184,5 @@ for _ in progress_bar:
         fname = result_prefix + "_at_iteration_{}.png".format(step)
         K.preprocessing.image.save_img('./assets/' + fname, img)
 #%%
-display(Image('./assets/' + result_prefix + "_at_iteration_4000.png"))
+display(Image('./assets/' + result_prefix + "_at_iteration_10000.png"))
 #%%
