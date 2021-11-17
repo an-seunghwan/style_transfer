@@ -21,24 +21,24 @@ PARAMS = {
     # Weights of the different loss components
     'total_variation_weight': 1e-6,
     'style_weight': 1e-6,
-    'content_weight': 1e-8,
+    'content_weight': 2.5e-8,
+    'img_nrows': 400,
     'channels': 3,
-    'iterations': 10000,
-    'initial_learning_rate': 100.0, 
-    'decay_steps': 100, 
+    'iterations': 50000,
+    'initial_learning_rate': 200.0, 
+    'decay_steps': 500, 
     'decay_rate': 0.96
 }
 #%%
-base_image_path = r'D:\celeba\img_align_celeba\img_align_celeba\001477.jpg'
-style_reference_image_path = r'D:\celeba\img_align_celeba\img_align_celeba\002210.jpg'
+base_image_path = r'D:\data1024x1024\data1024x1024\25384.jpg'
+style_reference_image_path = r'D:\data1024x1024\data1024x1024\25713.jpg'
 result_prefix = "celeba_generated"
 
 # Dimensions of the generated picture.
 width, height = K.preprocessing.image.load_img(base_image_path).size
 print(width)
 print(height)
-PARAMS['img_nrows'] = width
-PARAMS['img_ncols'] = height
+PARAMS['img_ncols'] = int(width * PARAMS['img_nrows'] / height)
 #%%
 display(Image(base_image_path))
 display(Image(style_reference_image_path))
@@ -184,5 +184,5 @@ for _ in progress_bar:
         fname = result_prefix + "_at_iteration_{}.png".format(step)
         K.preprocessing.image.save_img('./assets/' + fname, img)
 #%%
-display(Image('./assets/' + result_prefix + "_at_iteration_10000.png"))
+display(Image('./assets/' + result_prefix + "_at_iteration_5s0000.png"))
 #%%
