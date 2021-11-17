@@ -26,8 +26,8 @@ PARAMS = {
     'channels': 3,
     'iterations': 50000,
     'initial_learning_rate': 200.0, 
-    'decay_steps': 500, 
-    'decay_rate': 0.96
+    'decay_steps': 1000, 
+    'decay_rate': 0.975
 }
 #%%
 base_image_path = r'D:\data1024x1024\data1024x1024\25384.jpg'
@@ -185,4 +185,6 @@ for _ in progress_bar:
         K.preprocessing.image.save_img('./assets/' + fname, img)
 #%%
 display(Image('./assets/' + result_prefix + "_at_iteration_5s0000.png"))
+#%%
+
 #%%
