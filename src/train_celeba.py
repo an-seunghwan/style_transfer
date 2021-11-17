@@ -24,14 +24,14 @@ PARAMS = {
     'content_weight': 2.5e-8,
     'img_nrows': 400,
     'channels': 3,
-    'iterations': 50000,
+    'iterations': 100000,
     'initial_learning_rate': 200.0, 
     'decay_steps': 1000, 
     'decay_rate': 0.975
 }
 #%%
 base_image_path = r'D:\data1024x1024\data1024x1024\25384.jpg'
-style_reference_image_path = r'D:\data1024x1024\data1024x1024\25713.jpg'
+style_reference_image_path = r'D:\data1024x1024\data1024x1024\26576.jpg'
 result_prefix = "celeba_generated"
 
 # Dimensions of the generated picture.
@@ -179,7 +179,7 @@ for _ in progress_bar:
         step, PARAMS['iterations'], loss
     )) 
     
-    if step % 500 == 0:
+    if step % 1000 == 0:
         img = deprocess_image(combination_image.numpy())
         fname = result_prefix + "_at_iteration_{}.png".format(step)
         K.preprocessing.image.save_img('./assets/' + fname, img)
