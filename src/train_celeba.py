@@ -13,6 +13,7 @@ import numpy as np
 from tensorflow.keras.applications import vgg19
 from IPython.display import Image, display
 from tqdm import tqdm
+import matplotlib.pyplot as plt
 import os
 
 os.chdir(r'D:\style_transfer')
@@ -186,5 +187,61 @@ for _ in progress_bar:
 #%%
 display(Image('./assets/' + result_prefix + "_at_iteration_5s0000.png"))
 #%%
+'''feature visualization'''
+input_tensor = tf.concat([base_image, style_reference_image], axis=0)
+features = feature_extractor(input_tensor)
+#%%
+for j in range(len(style_layer_names)):
+    base_style_feature = features[style_layer_names[j]].numpy()[0]
+    base_style_feature.shape
 
+    fig, axes = plt.subplots(8, 8, figsize=(15, 15)) # first 64 features
+    for i in range(64):
+        axes.flatten()[i].imshow(base_style_feature[:, :, i], cmap='gray')
+        axes.flatten()[i].axis('off')
+    plt.tight_layout()
+    plt.savefig('./assets/base_style_feature_{}.png'.format(j),
+                dpi=200, bbox_inches="tight", pad_inches=0.1)
+    plt.show()
+    plt.close()
+#%%
+base_content_feature = features[content_layer_name[0]].numpy()[0]
+base_content_feature.shape
+
+fig, axes = plt.subplots(8, 8, figsize=(15, 15)) # first 64 features
+for i in range(64):
+    axes.flatten()[i].imshow(base_content_feature[:, :, i], cmap='gray')
+    axes.flatten()[i].axis('off')
+plt.tight_layout()
+plt.savefig('./assets/base_content_feature.png',
+            dpi=200, bbox_inches="tight", pad_inches=0.1)
+plt.show()
+plt.close()
+#%%
+for j in range(len(style_layer_names)):
+    target_style_feature = features[style_layer_names[j]].numpy()[1]
+    target_style_feature.shape
+
+    fig, axes = plt.subplots(8, 8, figsize=(15, 15)) # first 64 features
+    for i in range(64):
+        axes.flatten()[i].imshow(target_style_feature[:, :, i], cmap='gray')
+        axes.flatten()[i].axis('off')
+    plt.tight_layout()
+    plt.savefig('./assets/target_style_feature_{}.png'.format(j),
+                dpi=200, bbox_inches="tight", pad_inches=0.1)
+    plt.show()
+    plt.close()
+#%%
+target_content_feature = features[content_layer_name[0]].numpy()[0]
+target_content_feature.shape
+
+fig, axes = plt.subplots(8, 8, figsize=(15, 15)) # first 64 features
+for i in range(64):
+    axes.flatten()[i].imshow(target_content_feature[:, :, i], cmap='gray')
+    axes.flatten()[i].axis('off')
+plt.tight_layout()
+plt.savefig('./assets/target_content_feature.png',
+            dpi=200, bbox_inches="tight", pad_inches=0.1)
+plt.show()
+plt.close()
 #%%
