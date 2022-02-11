@@ -20,7 +20,7 @@ os.chdir('D:\style_transfer')
 PARAMS = {
     # Weights of the different loss components
     'total_variation_weight': 1e-6,
-    'style_weight': 1e-6,
+    'style_weight': 1e-6, # 1e-6
     'content_weight': 2.5e-8,
     'img_nrows': 400,
     'channels': 3,
@@ -163,7 +163,7 @@ optimizer = K.optimizers.SGD(
         decay_rate=PARAMS['decay_rate']
     )
 )
-
+#%%
 step = 0
 progress_bar = tqdm(range(PARAMS['iterations']))
 progress_bar.set_description('iteration {}/{} | current loss ?'.format(step, PARAMS['iterations']))
@@ -185,8 +185,8 @@ for _ in progress_bar:
     
     if step % 500 == 0:
         img = deprocess_image(combination_image.numpy())
-        fname = result_prefix + "_at_iteration_{}.png".format(step)
+        fname = result_prefix + "{}_at_iteration_{}.png".format(PARAMS['style_weight'], step)
         K.preprocessing.image.save_img('./assets/' + fname, img)
 #%%
-display(Image('./assets/' + result_prefix + "_at_iteration_4000.png"))
+display(Image('./assets/' + result_prefix + "{}_at_iteration_4000.png".format(PARAMS['style_weight'])))
 #%%
